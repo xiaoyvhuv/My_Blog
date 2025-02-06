@@ -1,6 +1,6 @@
 baseURL = "https://xiaoyvhuv.github.io"  # 网站的 URL
 languageCode = "zh"  # 网站语言代码
-title = "邢思宇"  # 网站标题
+title = "XingSiyv'sBlog"  # 网站标题
 theme = "hugo-theme-ladder"  # 使用的主题名称
 defaultContentLanguage = "zh"
 [params]

@@ -1,20 +1,126 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on 邢思宇</title>
+    <title>Blogs on XingSiyv&#39;sBlog</title>
     <link>http://localhost:1313/blog/</link>
-    <description>Recent content in Blogs on 邢思宇 created by </description>
+    <description>Recent content in Blogs on XingSiyv&#39;sBlog created by </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <lastBuildDate>Thu, 06 Feb 2025 12:03:30 +0800</lastBuildDate><atom:link href="http://localhost:1313/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>博客标题</title>
+      <title>计算机网络面试题汇总与解析：三次握手与四次挥手</title>
       <link>http://localhost:1313/blog/first/</link>
       <pubDate>Thu, 06 Feb 2025 12:03:30 +0800</pubDate>
       
       <guid>http://localhost:1313/blog/first/</guid>
-      <description>&lt;p&gt;这是摘要&lt;/p&gt;
-&lt;p&gt;这是内容&lt;/p&gt;</description>
+      <description>&lt;p&gt;在网络通信和面试场景中，TCP协议的三次握手与四次挥手是必考的核心知识点。本文从面试题角度出发，结合底层原理和实际场景，整理高频问题并提供深度解析。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;一基础概念与流程&#34;&gt;一、基础概念与流程&lt;/h3&gt;
+&lt;h4 id=&#34;1-三次握手过程&#34;&gt;&lt;strong&gt;1. 三次握手过程&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;问题&lt;/strong&gt;：请描述TCP三次握手的具体流程。&lt;br&gt;
+&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;SYN&lt;/strong&gt;：客户端发送&lt;code&gt;SYN=1, seq=x&lt;/code&gt;报文，进入&lt;code&gt;SYN_SENT&lt;/code&gt;状态。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SYN-ACK&lt;/strong&gt;：服务端返回&lt;code&gt;SYN=1, ACK=1, seq=y, ack=x+1&lt;/code&gt;，进入&lt;code&gt;SYN_RCVD&lt;/code&gt;状态。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ACK&lt;/strong&gt;：客户端发送&lt;code&gt;ACK=1, seq=x+1, ack=y+1&lt;/code&gt;，双方进入&lt;code&gt;ESTABLISHED&lt;/code&gt;状态。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;解析&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;核心目标&lt;/strong&gt;：同步初始序列号（ISN），确保双方收发能力正常。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;为何是三次？&lt;/strong&gt; 避免历史重复连接的初始化（如延迟的旧SYN报文），同时确保双方确认彼此的收发能力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;2-四次挥手过程&#34;&gt;&lt;strong&gt;2. 四次挥手过程&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;问题&lt;/strong&gt;：为什么断开连接需要四次挥手？&lt;br&gt;
+&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;FIN&lt;/strong&gt;：主动关闭方（如客户端）发送&lt;code&gt;FIN=1&lt;/code&gt;，进入&lt;code&gt;FIN_WAIT_1&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ACK&lt;/strong&gt;：被动关闭方（如服务端）返回&lt;code&gt;ACK&lt;/code&gt;，进入&lt;code&gt;CLOSE_WAIT&lt;/code&gt;，客户端进入&lt;code&gt;FIN_WAIT_2&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FIN&lt;/strong&gt;：服务端处理完数据后发送&lt;code&gt;FIN=1&lt;/code&gt;，进入&lt;code&gt;LAST_ACK&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ACK&lt;/strong&gt;：客户端返回&lt;code&gt;ACK&lt;/code&gt;后进入&lt;code&gt;TIME_WAIT&lt;/code&gt;，服务端关闭。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;解析&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;四次的原因&lt;/strong&gt;：TCP是全双工协议，需双方独立关闭通道。被动方可能需要时间处理剩余数据，因此ACK和FIN分开发送。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;TIME_WAIT的作用&lt;/strong&gt;：确保最后一个ACK能被接收（防止因丢包导致服务端重传FIN），同时让旧连接的报文在网络中消散（2MSL时间）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;二高频进阶问题&#34;&gt;二、高频进阶问题&lt;/h3&gt;
+&lt;h4 id=&#34;1-握手时syn洪泛攻击是什么如何防御&#34;&gt;&lt;strong&gt;1. 握手时SYN洪泛攻击是什么？如何防御？&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;攻击原理&lt;/strong&gt;：攻击者伪造大量SYN报文但不回复ACK，耗尽服务端资源（半连接队列）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;防御手段&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;启用&lt;code&gt;SYN Cookie&lt;/code&gt;机制（通过哈希计算验证请求合法性，不占用队列）。&lt;/li&gt;
+&lt;li&gt;限制半连接队列大小或缩短SYN超时时间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;2-大量close_wait状态的可能原因&#34;&gt;&lt;strong&gt;2. 大量CLOSE_WAIT状态的可能原因？&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;现象&lt;/strong&gt;：服务端存在大量&lt;code&gt;CLOSE_WAIT&lt;/code&gt;状态连接。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;原因&lt;/strong&gt;：应用程序未正确调用&lt;code&gt;close()&lt;/code&gt;方法，导致服务端无法发送FIN报文。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解决&lt;/strong&gt;：检查代码逻辑（如未关闭Socket、线程阻塞等）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;3-握手阶段能否携带数据&#34;&gt;&lt;strong&gt;3. 握手阶段能否携带数据？&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第三次握手可以携带数据&lt;/strong&gt;：此时连接已建立，客户端确认服务端的收发能力。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;前两次不能&lt;/strong&gt;：若SYN报文携带数据，可能被恶意攻击者利用（如放大攻击）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;4-time_wait状态为什么要等待2msl&#34;&gt;&lt;strong&gt;4. TIME_WAIT状态为什么要等待2MSL？&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MSL（Maximum Segment Lifetime）&lt;/strong&gt;：报文最大生存时间（通常30秒-2分钟）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;2MSL的意义&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;确保被动方的FIN重传能被响应（若ACK丢失，被动方会重发FIN）。&lt;/li&gt;
+&lt;li&gt;让旧连接的报文在网络中失效，避免与新连接冲突。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;三实战场景与异常分析&#34;&gt;三、实战场景与异常分析&lt;/h3&gt;
+&lt;h4 id=&#34;1-服务端出现大量time_wait连接怎么办&#34;&gt;&lt;strong&gt;1. 服务端出现大量TIME_WAIT连接怎么办？&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;原因&lt;/strong&gt;：短连接频繁创建和关闭（如HTTP短连接）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优化方案&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;使用长连接（如HTTP Keep-Alive）。&lt;/li&gt;
+&lt;li&gt;修改内核参数（如&lt;code&gt;net.ipv4.tcp_tw_reuse&lt;/code&gt;和&lt;code&gt;net.ipv4.tcp_tw_recycle&lt;/code&gt;，需谨慎）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;2-第二次握手丢失会发生什么&#34;&gt;&lt;strong&gt;2. 第二次握手丢失会发生什么？&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;客户端行为&lt;/strong&gt;：超时后重传SYN报文（指数退避）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;服务端行为&lt;/strong&gt;：未收到ACK，停留在&lt;code&gt;SYN_RCVD&lt;/code&gt;状态，直到超时丢弃连接。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;3-如果服务端直接断电tcp连接如何关闭&#34;&gt;&lt;strong&gt;3. 如果服务端直接断电，TCP连接如何关闭？&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;答案&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;无FIN报文&lt;/strong&gt;：客户端通过心跳机制（如Keep-Alive）检测到连接失效，主动发送RST复位连接。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;未启用心跳&lt;/strong&gt;：客户端可能长时间保持&lt;code&gt;ESTABLISHED&lt;/code&gt;状态，直到应用层超时。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;四总结与面试技巧&#34;&gt;四、总结与面试技巧&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;理解状态转换图&lt;/strong&gt;：熟记TCP的11种状态（如&lt;code&gt;SYN_SENT&lt;/code&gt;、&lt;code&gt;TIME_WAIT&lt;/code&gt;）及转换条件。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结合实际场景&lt;/strong&gt;：如高并发下的连接管理、服务器参数调优。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;扩展知识&lt;/strong&gt;：对比UDP的无连接特性，理解TCP的可靠性设计（如序列号、超时重传）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;面试提示&lt;/strong&gt;：回答时结合抓包工具（Wireshark）分析握手/挥手过程，展示动手能力。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;通过掌握三次握手与四次挥手的底层逻辑和异常处理，不仅能应对面试，更能为实际网络问题排查打下坚实基础。&lt;/p&gt;</description>
     </item>
     
   </channel>
