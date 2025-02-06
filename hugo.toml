@@ -46,9 +46,9 @@ enableEmoji = true
   name = "文章"
   url = "/blog/"
   weight = 1
-
+  
 [[menu.main]]
-  name = "归档"
+  name = "项目"
   url = "/archive/"
   weight = 2
 
@@ -56,6 +56,7 @@ enableEmoji = true
   name = "联系"
   url = "/contact/"
   weight = 3
+
 
 [[menu.main]]
   name = "网站统计"
